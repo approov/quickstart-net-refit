@@ -18,7 +18,6 @@ public partial class MainPage : ContentPage
     private static HttpClient httpClient;
     /* UNCOMMENT this line if using Approov */
     //private static ApproovHttpClient httpClient;
-
     public MainPage()
     {
         InitializeComponent();

@@ -65,7 +65,7 @@ To use Approov all you have to do is comment out the code using `HttpClient` and
 private static HttpClient httpClient;
 /* UNCOMMENT this line if using Approov */
 //private static ApproovHttpClient httpClient;
-public GetShapePlatform()
+public MainPage()
 {
     /* Comment out the line to use Approov SDK */
     httpClient = new HttpClient();
@@ -79,7 +79,7 @@ Change the commented out lines so the code becomes:
 //private static HttpClient httpClient;
 /* UNCOMMENT this line if using Approov */
 private static ApproovHttpClient httpClient;
-public GetShapePlatform()
+public MainPage()
 {
     /* Comment out the line to use Approov SDK */
     //httpClient = new HttpClient();
@@ -96,12 +96,24 @@ The `ApproovHttpClient` class adds the `Approov-Token` header and also applies p
 Finally, please, change the url to point to the Approov protected endpoint:
 
 ```C#
-static string endpointVersion = "v1";
+public interface IApiInterface
+{
+    [Get("/v1/hello/")]
+    Task<Dictionary<string, string>> GetHello();
+    [Get("/v1/shapes/")]
+    Task<Dictionary<string, string>> GetShape();
+}
 ```
 to point to `v3`:
 
 ```C#
-static string endpointVersion = "v3";
+public interface IApiInterface
+{
+    [Get("/v3/hello/")]
+    Task<Dictionary<string, string>> GetHello();
+    [Get("/v3/shapes/")]
+    Task<Dictionary<string, string>> GetShape();
+}
 ```
 
 ## REGISTER YOUR APP WITH APPROOV
