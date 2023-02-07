@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Refit;
 /* COMMENT out the line to use Approov SDK */
 using System.Net.Http;
 /* UNCOMMENT the lines bellow to use Approov SDK */
@@ -7,14 +8,12 @@ namespace ShapesApp;
 
 public partial class MainPage : ContentPage
 {
-    /* The endpoint version being used: v1 unprotected and v3 for Approov API protection */
-    static string endpointVersion = "v1";
-    /* The Shapes URL */
-    string shapesURL = "https://shapes.approov.io/" + endpointVersion + "/shapes/";
-    /* The Hello URL */
-    string helloURL = "https://shapes.approov.io/" + endpointVersion + "/hello/";
+    /* The shapes server URL */
+    static string baseURL = "https://shapes.approov.io";
     /* The secret key: REPLACE with shapes_api_key_placeholder if using SECRETS-PROTECTION */
     string shapes_api_key = "yXClypapWNHIifHUWmBIyPFAm";
+    // Refit API interface
+    private IApiInterface apiClient;
     /* COMMENT this line if using Approov */
     private static HttpClient httpClient;
     /* UNCOMMENT this line if using Approov */
@@ -30,28 +29,31 @@ public partial class MainPage : ContentPage
         //httpClient = ApproovService.CreateHttpClient();
         // Add substitution header: Uncomment if using SECRETS-PROTECTION
         //ApproovService.AddSubstitutionHeader("Api-Key", null);
+        httpClient.BaseAddress = new Uri(baseURL);
         httpClient.DefaultRequestHeaders.Add("Api-Key", shapes_api_key);
-
+        try
+        {
+            apiClient = RestService.For<IApiInterface>(httpClient);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Exception during RestService: " + ex.Message);
+        }
     }
 
     private async void OnHelloButtonClicked(object sender, EventArgs e)
     {
-        Console.WriteLine("HelloButton clicked!");
-        HttpResponseMessage response;
+        
         try
         {
-            response = await httpClient.GetAsync(helloURL).ConfigureAwait(false);
-            if (response.IsSuccessStatusCode)
+            Dictionary<string, string> response = await apiClient.GetHello().ConfigureAwait(false);
+            if (response.ContainsKey("text"))
             {
-                var cont = await response.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(cont);
-                if (values.ContainsKey("text"))
-                {
-                    // Set status image
-                    Application.Current.MainPage.Dispatcher.Dispatch(() => logoImage.Source = "hello.png");
-                    // Set status label
-                    Application.Current.MainPage.Dispatcher.Dispatch(() => textMessage.Text = values["text"]);
-                }
+                // Set status image
+                Application.Current.MainPage.Dispatcher.Dispatch(() => logoImage.Source = "hello.png");
+                // Set status label
+                Application.Current.MainPage.Dispatcher.Dispatch(() => textMessage.Text = response["text"]);
+                
             }
             else
             {
@@ -66,36 +68,29 @@ public partial class MainPage : ContentPage
             // Set status image
             Application.Current.MainPage.Dispatcher.Dispatch(() => logoImage.Source = "confused.png");
             // Set status label
-            Application.Current.MainPage.Dispatcher.Dispatch(() => textMessage.Text = "Exception getting Hello from Shapes server");
+            Application.Current.MainPage.Dispatcher.Dispatch(() => textMessage.Text = "Exception getting Hello from Shapes server: " + ex.Message);
         }
     }
 
     private async void OnShapeButtonClicked(System.Object sender, System.EventArgs e)
     {
-        Console.WriteLine("ShapeButton clicked!");
-        HttpResponseMessage response;
         try
         {
-            response = await httpClient.GetAsync(shapesURL).ConfigureAwait(false);
-            if (response.IsSuccessStatusCode)
-            {
-                var cont = await response.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(cont);
-                if (values.ContainsKey("shape"))
-                {
-                    string shapeImageName = values["shape"].ToLower() + ".png";
-                    // Set status image
-                    Application.Current.MainPage.Dispatcher.Dispatch(() => logoImage.Source = shapeImageName);
-                    // Set status label
-                    Application.Current.MainPage.Dispatcher.Dispatch(() => textMessage.Text = response.StatusCode.ToString());
-                }
+            Dictionary<string, string> response = await apiClient.GetShape().ConfigureAwait(false);
+            if (response.ContainsKey("shape")) {
+                string shapeImageName = response["shape"].ToLower() + ".png";
+                // Set status image
+                Application.Current.MainPage.Dispatcher.Dispatch(() => logoImage.Source = shapeImageName);
+                // Set status label
+                Application.Current.MainPage.Dispatcher.Dispatch(() => textMessage.Text = "200 OK");
             }
+                
             else
             {
                 // Set status image
                 Application.Current.MainPage.Dispatcher.Dispatch(() => logoImage.Source = "confused.png");
                 // Set status label
-                Application.Current.MainPage.Dispatcher.Dispatch(() => textMessage.Text = "Error getting Shape: " + response.StatusCode.ToString());
+                Application.Current.MainPage.Dispatcher.Dispatch(() => textMessage.Text = "Error getting Shape: response json malformed");
             }
         }
         catch (Exception ex)
@@ -107,4 +102,13 @@ public partial class MainPage : ContentPage
         }
     }
 
+}
+
+
+public interface IApiInterface
+{
+    [Get("/v1/hello/")]
+    Task<Dictionary<string, string>> GetHello();
+    [Get("/v1/shapes/")]
+    Task<Dictionary<string, string>> GetShape();
 }

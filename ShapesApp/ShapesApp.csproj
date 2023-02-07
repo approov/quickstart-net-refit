@@ -57,6 +57,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="4.0.0" />
+		<PackageReference Include="Refit" Version="6.3.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -71,5 +72,6 @@
 	<ItemGroup>
 	  <None Remove="Newtonsoft.Json" />
 	  <None Remove="CommunityToolkit.Maui" />
+	  <None Remove="Refit" />
 	</ItemGroup>
 </Project>
