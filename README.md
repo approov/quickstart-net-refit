@@ -12,11 +12,7 @@ We will use the latest versions of the `nuget.org` packages, `ApproovService.3.1
 
 ## ADDING THE APPROOV SDK ENABLED REFIT PACKAGE
 
-The Approov SDK needs a slightly modified `Refit` package using a specific implementation, and it is  available as a NuGet package in the default repository `nuget.org`. Note that it is not possible to use `Refit` and the `ApproovRefit` packages in the same project so you will need to uninstall the `Refit` package and replace it with the modified `ApproovRefit` one. 
-
-![Add Refit Package](readme-images/add-refit-package.jpg)
-
-Select and install the latest available version. Repeat the previous steps for the `ApproovHttpClient` and the `ApproovService` packages.
+The Approov SDK needs a slightly modified `Refit` package using a specific implementation, and it is  available as a NuGet package in the default repository `nuget.org`. Note that it is not possible to use `Refit` and the `ApproovRefit` packages in the same project so you will need to uninstall the `Refit` package and replace it with the modified `ApproovRefit` one. Select and install the latest available version. Repeat the previous steps for the `ApproovHttpClient` and the `ApproovService` packages.
 
 ![Add ApproovSDK Package](readme-images/add-nuget-packages.png)
 
