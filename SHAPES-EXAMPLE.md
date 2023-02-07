@@ -5,7 +5,7 @@ This quickstart is written specifically for native iOS and Android apps that are
 ## WHAT YOU WILL NEED
 * Access to a trial or paid Approov account
 * The `approov` command line tool [installed](https://approov.io/docs/latest/approov-installation/) with access to your account
-* [Visual Studio](https://visualstudio.microsoft.com/vs/mac/) with Xamarin extensions (Mac version 8.10.25 is used in this guide)
+* [Visual Studio](https://visualstudio.microsoft.com/vs/mac/) with Xamarin extensions (Mac version 17.4.3 is used in this guide)
 * The contents of the folder containing this README
 * An Apple mobile device with iOS 11 or higher or an Android 5.0+ device. Alternatively, iOS simulator or Android emulator would suffice
 * Nuget packages supporting the native Approov SDK: `ApproovService` version `3.1.4`, `ApproovHttpClient` version `3.1.0`, `ApproovRefit` version `6.3.2`  and `Square.OkHttp3` version `4.9.3` if targetting Android
