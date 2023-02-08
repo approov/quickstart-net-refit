@@ -1,6 +1,6 @@
 # APPROOV QUICKSTART: MAUI REFIT
 
-This quickstart is written specifically for mobile iOS and Android apps that are written in C# and .NET for making the API calls that you wish to protect with Approov. The sample code shown in this guide makes use of a custom [Refit](https://github.com/reactiveui/refit) implementation, ApproovRefit in order to access network resources. If this is not your situation then check if there is a more relevant quickstart guide available.
+This quickstart is written specifically for mobile iOS and Android apps that are written in C# and .NET MAUI for making the API calls that you wish to protect with Approov. The sample code shown in this guide makes use of a custom [Refit](https://github.com/reactiveui/refit) implementation, ApproovRefit in order to access network resources. If this is not your situation then check if there is a more relevant quickstart guide available.
 
 This quickstart provides the basic steps for integrating Approov into your app. A more detailed step-by-step guide using a [Shapes App Example](https://github.com/approov/quickstart-maui-refit/blob/main/SHAPES-EXAMPLE.md) is also available.
 
