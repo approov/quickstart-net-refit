@@ -67,6 +67,7 @@ To actually protect your APIs and/or secrets there are some further steps. Appro
 * [API PROTECTION](https://github.com/approov/quickstart-maui-refit/blob/main/API-PROTECTION.md): You should use this if you control the backend API(s) being protected and are able to modify them to ensure that a valid Approov token is being passed by the app. An [Approov Token](https://approov.io/docs/latest/approov-usage-documentation/#approov-tokens) is short lived crytographically signed JWT proving the authenticity of the call.
 
 * [SECRETS PROTECTION](https://github.com/approov/quickstart-maui-refit/blob/main/SECRETS-PROTECTION.md): This allows app secrets, including API keys for 3rd party services, to be protected so that they no longer need to be included in the released app code. These secrets are only made available to valid apps at runtime.
+
 Note that it is possible to use both approaches side-by-side in the same app.
 
 See [REFERENCE](https://github.com/approov/quickstart-maui-refit/blob/main/REFERENCE.md) for a complete list of all of the `ApproovService` methods.
